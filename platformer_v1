@@ -1,0 +1,39 @@
+from ursina import *
+from ursina.prefabs.first_person_controller import FirstPersonController
+import random
+
+# Настройка игры
+app = Ursina()
+
+# Добавляем землю с физикой
+grounds = [Entity(model='cube', scale=(10, 2, 10), color=color.green, collider='box', position=(0, 0, 0))]
+
+for i in range(1, 10):
+    grounds.append(Entity(model='cube', scale=(10, 2, 10), color=color.green, collider='box', position=(grounds[i-1].position.x + random.randint(-5, 5), i, i * 12)))
+
+# Настройка света
+light = DirectionalLight(parent=scene)
+light.rotation = Vec3(45, 45, 0)  # Направление света
+light.shadows = True  # Включаем тени для этого источника света
+
+# Добавляем мяч с физикой
+ball = Entity(model='sphere', scale=2, color=color.red, position=(0, 5, 0), collider='sphere')
+ball.rigidbody = True
+
+# Добавляем камеру (игрок)
+player = FirstPersonController()
+player.height = 5  # Корректируем высоту игрока
+
+# Используем капсулу для коллайдера игрока, чтобы избежать сквозного прохождения
+# player.collider = 'capsule'  # Это по умолчанию, так что можно не задавать
+
+# Добавляем физику для игрока
+player.rigidbody = True
+player.gravity = 0.5
+player.speed = 10
+
+def update():
+    pass  # Здесь можно добавить логику для игры
+
+# Запуск игры
+app.run()
