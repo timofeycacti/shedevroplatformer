@@ -17,7 +17,7 @@ light.shadows = True
 player = FirstPersonController()
 player.collider = 'box'
 player.model = "cube"
-player.jump_height = 3
+player.jump_height = 5
 player.gravity = 0.5
 player.speed = 10
 
@@ -28,6 +28,6 @@ def update():
         grounds[1].hide()
         grounds[1].clear()
         grounds.pop(1)
-        grounds.append(Entity(model='cube', scale=(10, 2, 10), color=color.green, collider='box', position=(player.position.x + random.choice([-10.5, 10.5]), player.position.y + random.randint(0, 5)/10, player.position.z + random.choice([-10.5, 10.5])),texture="grass"))
-    
+        grounds.append(Entity(model='cube', scale=(10, 2, 10), color=color.green, collider='box', position=(player.position.x + random.choice([-10.4, 10.4]), player.position.y + random.randint(0, 5)/10, player.position.z + random.choice([-10.4, 10.4])),texture="grass"))
+
 app.run()
