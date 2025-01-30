@@ -1,0 +1,33 @@
+from ursina import *
+from ursina.prefabs.first_person_controller import FirstPersonController
+import random
+
+app = Ursina()
+
+grounds = [
+    Entity(model='cube', scale=(10, 2, 10), color=color.green, collider='box', position=(0, 0, 0)),
+    Entity(model='cube', scale=(10, 2, 10), color=color.green, collider='box', position=(10, 0, 0)),
+    Entity(model='cube', scale=(10, 2, 10), color=color.green, collider='box', position=(20, 0, 0))
+]
+
+light = DirectionalLight(parent=scene)
+light.rotation = Vec3(45, 45, 0)
+light.shadows = True
+
+player = FirstPersonController()
+player.collider = 'box'
+player.model = "cube"
+player.jump_height = 3
+player.gravity = 0.5
+player.speed = 10
+
+def update():
+    global player, grounds
+    if player.intersects(grounds[2]):
+        print("da")
+        grounds[1].hide()
+        grounds[1].clear()
+        grounds.pop(1)
+        grounds.append(Entity(model='cube', scale=(10, 2, 10), color=color.green, collider='box', position=(player.position.x + random.choice([-11, 11]), player.position.y + random.randint(0, 5)/10, player.position.z + random.choice([-11, 11]))))
+
+app.run()
